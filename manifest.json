@@ -1,0 +1,69 @@
+{
+  "manifest_version": 2,
+  "name": "scAI",
+  "version": "1.0.4",
+  "description": "A paper-calm AI sidebar for Firefox. Bring your own API key, pick your model, and let it read the page you're on.",
+  "author": "scSpace",
+  "homepage_url": "https://github.com/scspace",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "scai@scspace",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["websiteContent", "browsingActivity"]
+      }
+    }
+  },
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "<all_urls>"
+  ],
+
+  "icons": {
+    "48": "icons/scai.svg",
+    "96": "icons/scai.svg"
+  },
+
+  "sidebar_action": {
+    "default_title": "scAI",
+    "default_panel": "sidebar/sidebar.html",
+    "default_icon": "icons/scai.svg",
+    "open_at_install": false
+  },
+
+  "browser_action": {
+    "default_title": "Toggle scAI (Alt+Shift+A)",
+    "default_icon": "icons/scai.svg"
+  },
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": { "default": "Alt+Shift+A" },
+      "description": "Toggle the scAI panel"
+    }
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true,
+    "browser_style": false
+  },
+
+  "background": {
+    "scripts": ["background/background.js"],
+    "persistent": false
+  },
+
+  "web_accessible_resources": [
+    "sidebar/sidebar.html",
+    "sidebar/sidebar.css",
+    "sidebar/sidebar.js",
+    "shared/*",
+    "icons/*"
+  ]
+}

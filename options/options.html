@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>scAI — Providers &amp; Models</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="bg-wash" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <div class="brand">
+        <span class="brand-mark">sc</span>
+        <span class="brand-name">scAI</span>
+      </div>
+      <span class="pill pill-accent">Bring your own key</span>
+    </div>
+  </header>
+
+  <main class="wrap main">
+    <section class="intro">
+      <h1 class="title">Providers &amp; models</h1>
+      <p class="lede">
+        scAI talks to any endpoint that speaks the <strong>Anthropic Messages API</strong> or the
+        <strong>OpenAI chat-completions API</strong>. Keys stay in this browser profile and are sent
+        only to the provider you point them at.
+      </p>
+    </section>
+
+    <section class="card block">
+      <div class="block-head">
+        <h2 class="block-title">Your providers</h2>
+        <button class="btn btn-primary btn-sm" id="btn-add">Add provider</button>
+      </div>
+      <div id="provider-list" class="provider-list"></div>
+    </section>
+
+    <section class="card block">
+      <div class="block-head">
+        <h2 class="block-title">Data &amp; reset</h2>
+      </div>
+      <div class="block-body">
+        <p class="hint">
+          Everything scAI stores — settings, API keys, saved chats — lives in this browser's
+          extension storage. Nothing is sent anywhere except the provider you choose.
+        </p>
+        <div class="btn-row">
+          <button class="btn" id="btn-export">Export settings (no keys)</button>
+          <button class="btn btn-danger" id="btn-forget-keys">Forget all API keys</button>
+          <button class="btn btn-danger" id="btn-reset">Reset everything</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- provider editor -->
+  <div class="modal-scrim" id="modal-scrim" hidden></div>
+  <section class="modal card" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header class="modal-head">
+      <h2 class="block-title" id="modal-title">Add provider</h2>
+      <button class="icon-btn" id="modal-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <div class="field">
+        <label class="label" for="f-name">Display name</label>
+        <input class="input" id="f-name" placeholder="My gateway">
+      </div>
+
+      <div class="field">
+        <label class="label" for="f-api">API dialect</label>
+        <select class="select" id="f-api">
+          <option value="openai">OpenAI-compatible (/chat/completions)</option>
+          <option value="anthropic">Anthropic Messages (/messages)</option>
+        </select>
+        <p class="hint" id="f-api-hint"></p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="f-base">Base URL</label>
+        <input class="input mono" id="f-base" placeholder="https://api.example.com/v1" spellcheck="false">
+        <p class="hint">The part before <code>/chat/completions</code> or <code>/messages</code>.</p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="f-key">API key</label>
+        <input class="input mono" id="f-key" type="password" placeholder="sk-…" autocomplete="off" spellcheck="false">
+        <label class="switch" style="margin-top:.4rem">
+          <input type="checkbox" id="f-nokey">
+          <span class="switch-track"></span>
+          <span class="switch-text">No key needed (local server)</span>
+        </label>
+      </div>
+
+      <div class="field">
+        <label class="label" for="f-maxtokens">Default max output tokens</label>
+        <input class="input" id="f-maxtokens" type="number" min="256" max="128000" step="256" value="8192">
+      </div>
+
+      <hr class="divider">
+
+      <div class="field">
+        <div class="models-head">
+          <span class="label">Models</span>
+          <div class="btn-row">
+            <button class="btn btn-sm" id="btn-fetch-models" type="button">Fetch from API</button>
+            <button class="btn btn-sm" id="btn-add-model" type="button">Add row</button>
+          </div>
+        </div>
+        <div id="model-rows" class="model-rows"></div>
+        <p class="hint" id="model-hint">
+          Tick <em>vision</em> for models that accept images. Leaving the list empty is fine — you can
+          always type a model ID in the sidebar.
+        </p>
+      </div>
+    </div>
+
+    <footer class="modal-foot">
+      <button class="btn btn-danger" id="btn-delete" type="button">Delete</button>
+      <div class="grow"></div>
+      <button class="btn" id="btn-cancel" type="button">Cancel</button>
+      <button class="btn btn-primary" id="btn-save" type="button">Save provider</button>
+    </footer>
+  </section>
+
+  <script src="../shared/providers.js"></script>
+  <script src="../shared/store.js"></script>
+  <script src="../shared/api.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
